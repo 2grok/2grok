@@ -1,0 +1,31 @@
+{
+    "name": "2grok",
+    "version": "0.0.1",
+    "description": "Logging pattern to grok filter converter",
+    "main": "index.js",
+    "scripts": {
+        "test": "./node_modules/.bin/jasmine-node spec",
+        "ncu": "./node_modules/npm-check-updates/bin/ncu",
+        "ncu-a": "./node_modules/npm-check-updates/bin/ncu -a",
+        "jison": "pushd lib ; ../node_modules/jison/lib/cli.js ../grammar/*.jison ; popd"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/typekpb/2grok.git"
+    },
+    "keywords": [
+        "grok",
+        "logging"
+    ],
+    "author": "Peter Butkovic",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/typekpb/2grok/issues"
+    },
+    "homepage": "https://github.com/typekpb/2grok#readme",
+    "devDependencies": {
+        "jasmine-node": "1.14.5",
+        "jison": "0.4.17",
+        "npm-check-updates": "2.8.8"
+    }
+}
