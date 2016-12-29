@@ -105,6 +105,19 @@ describe("with %F", function() {
     });
 });
 
+describe("with %l", function() {
+    describe("implicit", function() {
+        it("returns '%{JAVASTACKTRACEPART:location}'", function() {
+            expect(exec('%l')).toBe('%{JAVASTACKTRACEPART:location}');
+        });
+    });
+    describe("having format modifiers", function() {
+        it("returns '%{JAVAFILE:file}'", function() {
+            expect(exec('%-20.30l')).toBe('%{JAVASTACKTRACEPART:location}');
+        });
+    });
+});
+
 describe("with percent char", function() {
     describe("only", function() {
         it("returns '%'", function() {
