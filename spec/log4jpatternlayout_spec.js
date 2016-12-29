@@ -67,7 +67,18 @@ describe("with %d", function() {
     });
 });
 
-
+describe("with percent char", function() {
+    describe("only", function() {
+        it("returns '%'", function() {
+            expect(exec('%%')).toBe('%');
+        });
+    });
+    describe("and pattern", function() {
+        it("returns percent char and grok pattern", function() {
+            expect(exec('%% %C')).toBe('% %{JAVACLASS:class}');
+        });
+    });
+});
 
 describe("with multiple patterns", function() {
     describe("separated by non-whitespace", function() {
