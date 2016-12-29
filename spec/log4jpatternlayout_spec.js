@@ -50,6 +50,21 @@ describe("with %d", function() {
             expect(exec('%d')).toBe('%{TIMESTAMP_ISO8601:timestamp}');
         });
     });
+    describe("having date format specifier 'ABSOLUTE'", function() {
+        it("returns '(?<timestamp>%{HOUR}:%{MINUTE}:%{SECOND},%{NONNEGINT})'", function() {
+            expect(exec('%d{ABSOLUTE}')).toBe('(?<timestamp>%{HOUR}:%{MINUTE}:%{SECOND},%{NONNEGINT})');
+        });
+    });
+    describe("having date format specifier 'DATE'", function() {
+        it("returns '(?<timestamp>%{MONTHDAY} %{MONTHNUM2} %{YEAR} %{HOUR}:%{MINUTE}:%{SECOND},%{NONNEGINT})'", function() {
+            expect(exec('%d{DATE}')).toBe('(?<timestamp>%{MONTHDAY} %{MONTHNUM2} %{YEAR} %{HOUR}:%{MINUTE}:%{SECOND},%{NONNEGINT})');
+        });
+    });
+    describe("having date format specifier 'ISO8601'", function() {
+        it("returns '%{TIMESTAMP_ISO8601:timestamp}'", function() {
+            expect(exec('%d{ISO8601}')).toBe('%{TIMESTAMP_ISO8601:timestamp}');
+        });
+    });
     describe("having date format specifier: 'yyyy'", function() {
         it("returns '(?<timestamp>%{YEAR})'", function() {
             expect(exec('%d{yyyy}')).toBe('(?<timestamp>%{YEAR})');
@@ -65,6 +80,17 @@ describe("with %d", function() {
             expect(exec('%d{yyyyMMdd - HH:mm:ss}')).toBe('(?<timestamp>%{YEAR}%{MONTHNUM2}%{MONTHDAY} - %{HOUR}:%{MINUTE}:%{SECOND})');
         });
     });
+    describe("having date format specifier: 'HH:mm:ss,SSS'", function() {
+        it("returns '(?<timestamp>%{HOUR}:%{MINUTE}:%{SECOND},%{NONNEGINT})'", function() {
+            expect(exec('%d{HH:mm:ss,SSS}')).toBe('(?<timestamp>%{HOUR}:%{MINUTE}:%{SECOND},%{NONNEGINT})');
+        });
+    });
+    describe("having date format specifier: 'dd MMM yyyy HH:mm:ss,SSS'", function() {
+        it("returns ''(?<timestamp>%{MONTHDAY} %{MONTHNUM2} %{YEAR} %{HOUR}:%{MINUTE}:%{SECOND},%{NONNEGINT})'", function() {
+            expect(exec('%d{dd MMM yyyy HH:mm:ss,SSS}')).toBe('(?<timestamp>%{MONTHDAY} %{MONTHNUM2} %{YEAR} %{HOUR}:%{MINUTE}:%{SECOND},%{NONNEGINT})');
+        });
+    });
+
 });
 
 describe("with percent char", function() {

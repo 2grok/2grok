@@ -11,6 +11,9 @@
 
 <conversionpattern>[c]([{][0-9]+[}])?           %{ this.popState();                             return 'CATEGORY'; %}
 <conversionpattern>[C]([{][0-9]+[}])?           %{ this.popState();                             return 'CLASS'; %}
+<conversionpattern>[d]'{ABSOLUTE}'              %{ this.popState();                             return 'DATE_EXPLICIT_ABSOLUTE'; %}
+<conversionpattern>[d]'{DATE}'                  %{ this.popState();                             return 'DATE_EXPLICIT_DATE'; %}
+<conversionpattern>[d]'{ISO8601}'               %{ this.popState();                             return 'DATE_EXPLICIT_ISO8601'; %}
 <conversionpattern>[d][{]                       %{ this.popState(); this.begin('dateformat');   return 'DATE_EXPLICIT_START'; %}
 <conversionpattern>[d]                          %{ this.popState();                             return 'DATE_IMPLICIT'; %}
 <conversionpattern>[F]                          %{ this.popState();                             return 'FILE'; %}
@@ -78,6 +81,18 @@ EXPRESSION
         { $$ = '%{TIMESTAMP_ISO8601:timestamp}' + $3; }
     | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE_IMPLICIT EXPRESSION
         { $$ = '%{TIMESTAMP_ISO8601:timestamp}' + $4; }
+    | CONVERSIONPATTERN_START DATE_EXPLICIT_ABSOLUTE EXPRESSION
+        { $$ = '(?<timestamp>%{HOUR}:%{MINUTE}:%{SECOND},%{NONNEGINT})' + $3; }
+    | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE_EXPLICIT_ABSOLUTE EXPRESSION
+        { $$ = '(?<timestamp>%{HOUR}:%{MINUTE}:%{SECOND},%{NONNEGINT})' + $4; }
+    | CONVERSIONPATTERN_START DATE_EXPLICIT_DATE EXPRESSION
+        { $$ = '(?<timestamp>%{MONTHDAY} %{MONTHNUM2} %{YEAR} %{HOUR}:%{MINUTE}:%{SECOND},%{NONNEGINT})' + $3; }
+    | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE_EXPLICIT_DATE EXPRESSION
+        { $$ = '(?<timestamp>%{MONTHDAY} %{MONTHNUM2} %{YEAR} %{HOUR}:%{MINUTE}:%{SECOND},%{NONNEGINT})' + $4; }
+    | CONVERSIONPATTERN_START DATE_EXPLICIT_ISO8601 EXPRESSION
+        { $$ = '%{TIMESTAMP_ISO8601:timestamp}' + $3; }
+    | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE_EXPLICIT_ISO8601 EXPRESSION
+        { $$ = '%{TIMESTAMP_ISO8601:timestamp}' + $4; }
     | CONVERSIONPATTERN_START DATE_EXPLICIT_START DATE_EXPLICIT EXPRESSION
         { $$ = '(?<timestamp>' + $3 + $4; }
     | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE_EXPLICIT_START DATE_EXPLICIT EXPRESSION
@@ -125,7 +140,7 @@ DATE_EXPLICIT
     | SECOND DATE_EXPLICIT
         { $$ = '%{SECOND}' + $2; }
     | MILISECOND DATE_EXPLICIT
-        { $$ = '%{[0-9]{1,2}}' + $2; }
+        { $$ = '%{NONNEGINT}' + $2; }
     | TIMEZONE_GENERAL DATE_EXPLICIT
         { $$ = '%{[a-zA-Z -:0-9]+}' + $2; }
     | TIMEZONE_RFC822 DATE_EXPLICIT
