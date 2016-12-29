@@ -117,6 +117,11 @@ EXPRESSION
         { $$ = '%{GREEDYDATA:message}' + $3; }
     | CONVERSIONPATTERN_START FORMAT_MODIFIERS MESSAGE EXPRESSION
         { $$ = '%{GREEDYDATA:message}' + $4; }
+    | CONVERSIONPATTERN_START METHOD EXPRESSION
+        { $$ = '%{JAVAMETHOD:method}' + $3; }
+    | CONVERSIONPATTERN_START FORMAT_MODIFIERS METHOD EXPRESSION
+        { $$ = '%{JAVAMETHOD:method}' + $4; }
+        
 
     | ANY_CHAR EXPRESSION
         { $$ = $1 + $2; }

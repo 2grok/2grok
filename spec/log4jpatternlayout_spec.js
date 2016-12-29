@@ -131,6 +131,18 @@ describe("with %m", function() {
     });
 });
 
+describe("with %M", function() {
+    describe("implicit", function() {
+        it("returns '%{JAVAMETHOD:method}'", function() {
+            expect(exec('%M')).toBe('%{JAVAMETHOD:method}');
+        });
+    });
+    describe("having format modifiers", function() {
+        it("returns '%{JAVAMETHOD:method}'", function() {
+            expect(exec('%-20.30M')).toBe('%{JAVAMETHOD:method}');
+        });
+    });
+});
 
 describe("with %l", function() {
     describe("implicit", function() {
