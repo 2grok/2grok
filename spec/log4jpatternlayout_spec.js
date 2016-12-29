@@ -67,6 +67,44 @@ describe("with %d", function() {
     });
 });
 
+
+
+describe("with multiple patterns", function() {
+    describe("separated by non-whitespace", function() {
+        it("returns grok pattern with separator", function() {
+            expect(exec('%c-%C')).toBe('%{JAVACLASS:category}-%{JAVACLASS:class}');
+        });
+    });
+    describe("separated by whitespace", function() {
+        it("returns grok pattern with separator", function() {
+            expect(exec('%c %C')).toBe('%{JAVACLASS:category} %{JAVACLASS:class}');
+        });
+    });
+    describe("separated by multiple chars", function() {
+        it("returns grok pattern with all separators", function() {
+            expect(exec('%c : %C')).toBe('%{JAVACLASS:category} : %{JAVACLASS:class}');
+        });
+    });
+});
+
+describe("without patterns", function() {
+    describe("non-whitespace only", function() {
+        it("returns grok pattern with separator", function() {
+            expect(exec('foo')).toBe('foo');
+        });
+    });
+    describe("whitespace only", function() {
+        it("returns grok pattern with separator", function() {
+            expect(exec(' \t')).toBe(' \t');
+        });
+    });
+    describe("multiple chars", function() {
+        it("returns grok pattern with all separators", function() {
+            expect(exec(' foo\tbar ')).toBe(' foo\tbar ');
+        });
+    });
+});
+
 function exec(input) {
     return require("../lib/log4jpatternlayout").parse(input);
 }

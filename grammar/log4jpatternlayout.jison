@@ -51,6 +51,7 @@
 <dateformat>(.)                                                                                 return 'DATE_ANY_CHAR';
 '%%'                                                                                            return 'PERCENT';
 '%'                                             %{ this.begin('conversionpattern');		        return 'CONVERSIONPATTERN_START'; %}
+(.)                                                                                             return 'ANY_CHAR';
 <<EOF>>                         			                                                    return 'EOF';
 
 /lex
@@ -58,27 +59,30 @@
 %%
 
 EXPRESSIONS
-    : EXPRESSION EOF
+    : EXPRESSION
         { typeof console !== 'undefined' ? console.log($1) : print($1); return $1; }
     ;
 
 EXPRESSION
-    : CONVERSIONPATTERN_START CATEGORY
-        { $$ = '%{JAVACLASS:category}'; }
-    | CONVERSIONPATTERN_START FORMAT_MODIFIERS CATEGORY
-        { $$ = '%{JAVACLASS:category}'; }
-    | CONVERSIONPATTERN_START CLASS
-        { $$ = '%{JAVACLASS:class}'; }
-    | CONVERSIONPATTERN_START FORMAT_MODIFIERS CLASS
-        { $$ = '%{JAVACLASS:class}'; }
-    | CONVERSIONPATTERN_START DATE_IMPLICIT  
-        { $$ = '%{TIMESTAMP_ISO8601:timestamp}'; }
-    | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE_IMPLICIT
-        { $$ = '%{TIMESTAMP_ISO8601:timestamp}'; }
-    | CONVERSIONPATTERN_START DATE_EXPLICIT_START DATE_EXPLICIT
-        { $$ = '(?<timestamp>' + $3; }
-    | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE_EXPLICIT_START DATE_EXPLICIT
-        { $$ = '(?<timestamp>' + $4; }
+    : CONVERSIONPATTERN_START CATEGORY EXPRESSION
+        { $$ = '%{JAVACLASS:category}' + $3; }
+    | CONVERSIONPATTERN_START FORMAT_MODIFIERS CATEGORY EXPRESSION
+        { $$ = '%{JAVACLASS:category}' + $4; }
+    | CONVERSIONPATTERN_START CLASS EXPRESSION
+        { $$ = '%{JAVACLASS:class}' + $3; }
+    | CONVERSIONPATTERN_START FORMAT_MODIFIERS CLASS EXPRESSION
+        { $$ = '%{JAVACLASS:class}' + $4; }
+    | CONVERSIONPATTERN_START DATE_IMPLICIT EXPRESSION
+        { $$ = '%{TIMESTAMP_ISO8601:timestamp}' + $3; }
+    | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE_IMPLICIT EXPRESSION
+        { $$ = '%{TIMESTAMP_ISO8601:timestamp}' + $4; }
+    | CONVERSIONPATTERN_START DATE_EXPLICIT_START DATE_EXPLICIT EXPRESSION
+        { $$ = '(?<timestamp>' + $3 + $4; }
+    | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE_EXPLICIT_START DATE_EXPLICIT EXPRESSION
+        { $$ = '(?<timestamp>' + $4 + $5; }
+    | ANY_CHAR EXPRESSION
+        { $$ = $1 + $2; }
+    | EOF /* terminating */
     ;
 
 DATE_EXPLICIT
@@ -126,8 +130,8 @@ DATE_EXPLICIT
         { $$ = '%{[-:0-9]+}' + $2; }
     | TIMEZONE_ISO_8601 DATE_EXPLICIT
         { $$ = '%{[-:0-9]+}' + $2; }
-    | DATE_EXPLICIT_END
-        { $$ = ')'; }
     | DATE_ANY_CHAR DATE_EXPLICIT
         { $$ = $1 + $2; }
+    | DATE_EXPLICIT_END /* terminating */
+        { $$ = ')'; }
     ;
