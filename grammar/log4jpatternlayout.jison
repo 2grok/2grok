@@ -113,6 +113,10 @@ EXPRESSION
         { $$ = '%{NONNEGINT:line}' + $3; }
     | CONVERSIONPATTERN_START FORMAT_MODIFIERS LINE EXPRESSION
         { $$ = '%{NONNEGINT:line}' + $4; }
+    | CONVERSIONPATTERN_START MESSAGE EXPRESSION
+        { $$ = '%{GREEDYDATA:message}' + $3; }
+    | CONVERSIONPATTERN_START FORMAT_MODIFIERS MESSAGE EXPRESSION
+        { $$ = '%{GREEDYDATA:message}' + $4; }
 
     | ANY_CHAR EXPRESSION
         { $$ = $1 + $2; }

@@ -118,6 +118,19 @@ describe("with %L", function() {
     });
 });
 
+describe("with %m", function() {
+    describe("implicit", function() {
+        it("returns '%{GREEDYDATA:message}'", function() {
+            expect(exec('%m')).toBe('%{GREEDYDATA:message}');
+        });
+    });
+    describe("having format modifiers", function() {
+        it("returns '%{GREEDYDATA:message}'", function() {
+            expect(exec('%-20.30m')).toBe('%{GREEDYDATA:message}');
+        });
+    });
+});
+
 
 describe("with %l", function() {
     describe("implicit", function() {
