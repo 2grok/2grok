@@ -105,6 +105,20 @@ describe("with %F", function() {
     });
 });
 
+describe("with %L", function() {
+    describe("implicit", function() {
+        it("returns '%{NONNEGINT:line}'", function() {
+            expect(exec('%L')).toBe('%{NONNEGINT:line}');
+        });
+    });
+    describe("having format modifiers", function() {
+        it("returns '%{NONNEGINT:line}'", function() {
+            expect(exec('%-20.30L')).toBe('%{NONNEGINT:line}');
+        });
+    });
+});
+
+
 describe("with %l", function() {
     describe("implicit", function() {
         it("returns '%{JAVASTACKTRACEPART:location}'", function() {
