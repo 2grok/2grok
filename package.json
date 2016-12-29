@@ -7,7 +7,7 @@
         "test": "./node_modules/.bin/jasmine-node spec",
         "ncu": "./node_modules/npm-check-updates/bin/ncu",
         "ncu-a": "./node_modules/npm-check-updates/bin/ncu -a",
-        "jison": "pushd lib ; ../node_modules/jison/lib/cli.js ../grammar/*.jison ; popd"
+        "jison": "cd lib; ../node_modules/jison/lib/cli.js ../grammar/*.jison"
     },
     "repository": {
         "type": "git",
