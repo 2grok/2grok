@@ -77,6 +77,8 @@ EXPRESSION
         { $$ = '%{JAVACLASS:class}' + $3; }
     | CONVERSIONPATTERN_START FORMAT_MODIFIERS CLASS EXPRESSION
         { $$ = '%{JAVACLASS:class}' + $4; }
+
+    /* date */
     | CONVERSIONPATTERN_START DATE_IMPLICIT EXPRESSION
         { $$ = '%{TIMESTAMP_ISO8601:timestamp}' + $3; }
     | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE_IMPLICIT EXPRESSION
@@ -97,6 +99,13 @@ EXPRESSION
         { $$ = '(?<timestamp>' + $3 + $4; }
     | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE_EXPLICIT_START DATE_EXPLICIT EXPRESSION
         { $$ = '(?<timestamp>' + $4 + $5; }
+    
+    
+    | CONVERSIONPATTERN_START FILE EXPRESSION
+        { $$ = '%{JAVAFILE:file}' + $3; }
+    | CONVERSIONPATTERN_START FORMAT_MODIFIERS FILE EXPRESSION
+        { $$ = '%{JAVAFILE:file}' + $4; }
+
     | ANY_CHAR EXPRESSION
         { $$ = $1 + $2; }
     | EOF /* terminating */
@@ -108,19 +117,19 @@ DATE_EXPLICIT
     | YEAR DATE_EXPLICIT
         { $$ = '%{YEAR}' + $2; }
     | WEEK_YEAR DATE_EXPLICIT
-        { $$ = '%{[0-9]+}' + $2; }
+        { $$ = '%{NONNEGINT}' + $2; }
     | MONTH DATE_EXPLICIT
         { $$ = '%{MONTHNUM2}' + $2; }
     | WEEK_IN_YEAR DATE_EXPLICIT
-        { $$ = '%{[0-9]{1,2}}' + $2; }
+        { $$ = '%{NONNEGINT}' + $2; }
     | WEEK_IN_MONTH DATE_EXPLICIT
-        { $$ = '%{[0-9]}' + $2; }
+        { $$ = '%{NONNEGINT}' + $2; }
     | DAY_IN_YEAR DATE_EXPLICIT
-        { $$ = '%{[0-9]+}' + $2; }
+        { $$ = '%{NONNEGINT}' + $2; }
     | DAY_IN_MONTH DATE_EXPLICIT
         { $$ = '%{MONTHDAY}' + $2; }
     | DAY_OF_WEEK_IN_MONTH DATE_EXPLICIT
-        { $$ = '%{[0-9]+}' + $2; }
+        { $$ = '%{NONNEGINT}' + $2; }
     | DAY_NAME_IN_WEEK DATE_EXPLICIT
         { $$ = '%{[a-zA-Z]+}' + $2; }
     | DAY_NUMBER_IN_WEEK DATE_EXPLICIT

@@ -90,7 +90,19 @@ describe("with %d", function() {
             expect(exec('%d{dd MMM yyyy HH:mm:ss,SSS}')).toBe('(?<timestamp>%{MONTHDAY} %{MONTHNUM2} %{YEAR} %{HOUR}:%{MINUTE}:%{SECOND},%{NONNEGINT})');
         });
     });
+});
 
+describe("with %F", function() {
+    describe("implicit", function() {
+        it("returns '%{JAVAFILE:file}'", function() {
+            expect(exec('%F')).toBe('%{JAVAFILE:file}');
+        });
+    });
+    describe("having format modifiers", function() {
+        it("returns '%{JAVAFILE:file}'", function() {
+            expect(exec('%-20.30F')).toBe('%{JAVAFILE:file}');
+        });
+    });
 });
 
 describe("with percent char", function() {
