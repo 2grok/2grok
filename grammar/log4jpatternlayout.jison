@@ -76,57 +76,58 @@ EXPRESSION
     | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE_IMPLICIT
         { $$ = '%{TIMESTAMP_ISO8601:timestamp}'; }
     | CONVERSIONPATTERN_START DATE_EXPLICIT_START DATE_EXPLICIT
-        { $$ = '(?<timestamp>'+$3+')'; }
+        { $$ = '(?<timestamp>' + $3; }
     | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE_EXPLICIT_START DATE_EXPLICIT
-        { $$ = '(?<timestamp>'+$4+')'; }
+        { $$ = '(?<timestamp>' + $4; }
     ;
 
 DATE_EXPLICIT
     : ERA DATE_EXPLICIT
-        { $$ = '%{[A-Z_]+'; }
+        { $$ = '%{[A-Z_]+' + $2; }
     | YEAR DATE_EXPLICIT
-        { $$ = '%{YEAR}'; }
+        { $$ = '%{YEAR}' + $2; }
     | WEEK_YEAR DATE_EXPLICIT
-        { $$ = '%{[0-9]+}'; }
+        { $$ = '%{[0-9]+}' + $2; }
     | MONTH DATE_EXPLICIT
-        { $$ = '%{MONTHNUM2}'; }
+        { $$ = '%{MONTHNUM2}' + $2; }
     | WEEK_IN_YEAR DATE_EXPLICIT
-        { $$ = '%{[0-9]{1,2}}'; }
+        { $$ = '%{[0-9]{1,2}}' + $2; }
     | WEEK_IN_MONTH DATE_EXPLICIT
-        { $$ = '%{[0-9]}'; }
+        { $$ = '%{[0-9]}' + $2; }
     | DAY_IN_YEAR DATE_EXPLICIT
-        { $$ = '%{[0-9]+}'; }
+        { $$ = '%{[0-9]+}' + $2; }
     | DAY_IN_MONTH DATE_EXPLICIT
-        { $$ = '%{[0-9]{1,2}}'; }
+        { $$ = '%{MONTHDAY}' + $2; }
     | DAY_OF_WEEK_IN_MONTH DATE_EXPLICIT
-        { $$ = '%{[0-9]+}'; }
+        { $$ = '%{[0-9]+}' + $2; }
     | DAY_NAME_IN_WEEK DATE_EXPLICIT
-        { $$ = '%{[a-zA-Z]+}'; }
+        { $$ = '%{[a-zA-Z]+}' + $2; }
     | DAY_NUMBER_IN_WEEK DATE_EXPLICIT
-        { $$ = '%{[1-7]}'; }
+        { $$ = '%{[1-7]}' + $2; }
     | AM_PM DATE_EXPLICIT
-        { $$ = '%{[AP][M]}'; }
+        { $$ = '%{[AP][M]}' + $2; }
     | HOUR_IN_DAY_0_23 DATE_EXPLICIT
-        { $$ = '%{HOUR}'; }
+        { $$ = '%{HOUR}' + $2; }
     | HOUR_IN_DAY_1_24 DATE_EXPLICIT
-        { $$ = '%{HOUR}'; }
+        { $$ = '%{HOUR}' + $2; }
     | HOUR_IN_AM_PM_0_11 DATE_EXPLICIT
-        { $$ = '%{HOUR}'; }
+        { $$ = '%{HOUR}' + $2; }
     | HOUR_IN_AM_PM_1_12 DATE_EXPLICIT
-        { $$ = '%{HOUR}'; }
+        { $$ = '%{HOUR}' + $2; }
     | MINUTE DATE_EXPLICIT
-        { $$ = '%{MINUTE}'; }
+        { $$ = '%{MINUTE}' + $2; }
     | SECOND DATE_EXPLICIT
-        { $$ = '%{SECOND}'; }
+        { $$ = '%{SECOND}' + $2; }
     | MILISECOND DATE_EXPLICIT
-        { $$ = '%{[0-9]{1,2}}'; }
+        { $$ = '%{[0-9]{1,2}}' + $2; }
     | TIMEZONE_GENERAL DATE_EXPLICIT
-        { $$ = '%{[a-zA-Z -:0-9]+}'; }
+        { $$ = '%{[a-zA-Z -:0-9]+}' + $2; }
     | TIMEZONE_RFC822 DATE_EXPLICIT
-        { $$ = '%{[-:0-9]+}'; }
+        { $$ = '%{[-:0-9]+}' + $2; }
     | TIMEZONE_ISO_8601 DATE_EXPLICIT
-        { $$ = '%{[-:0-9]+}'; }
+        { $$ = '%{[-:0-9]+}' + $2; }
     | DATE_EXPLICIT_END
+        { $$ = ')'; }
     | DATE_ANY_CHAR DATE_EXPLICIT
-        { $$ = $1; }
+        { $$ = $1 + $2; }
     ;
