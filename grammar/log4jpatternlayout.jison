@@ -51,7 +51,7 @@
 <dateformat>[z]+                                                                                return 'TIMEZONE_GENERAL';
 <dateformat>[Z]+                                                                                return 'TIMEZONE_RFC822';
 <dateformat>[X]+                                                                                return 'TIMEZONE_ISO_8601';
-<dateformat>[.]                                                                                 return 'DATE_ANY_CHAR';
+<dateformat>(.)                                                                                 return 'DATE_ANY_CHAR';
 '%%'                                                                                            return 'PERCENT';
 '%'                                             %{ this.begin('conversionpattern');		        return 'CONVERSIONPATTERN_START'; %}
 (.)                                                                                             return 'ANY_CHAR';
