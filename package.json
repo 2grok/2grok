@@ -4,10 +4,10 @@
     "description": "Logging pattern to grok filter converter",
     "main": "index.js",
     "scripts": {
-        "test": "./node_modules/.bin/jasmine-node spec",
-        "ncu": "./node_modules/npm-check-updates/bin/ncu",
-        "ncu-a": "./node_modules/npm-check-updates/bin/ncu -a",
-        "jison": "cd lib; ../node_modules/jison/lib/cli.js ../grammar/*.jison"
+        "test": "jasmine-node spec",
+        "ncu": "npm-check-updates",
+        "ncu-a": "npm-check-updates -a",
+        "jison": "cd lib; jison ../grammar/*.jison"
     },
     "repository": {
         "type": "git",
