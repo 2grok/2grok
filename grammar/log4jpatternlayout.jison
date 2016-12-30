@@ -69,43 +69,32 @@ EXPRESSIONS
 EXPRESSION
     : PERCENT EXPRESSION
         { $$ = '%' + $2; }
-    | CONVERSIONPATTERN_START CATEGORY EXPRESSION
-        { $$ = '%{JAVACLASS:category}' + $3; }
-    | CONVERSIONPATTERN_START FORMAT_MODIFIERS CATEGORY EXPRESSION
-        { $$ = '%{JAVACLASS:category}' + $4; }
-    | CONVERSIONPATTERN_START CLASS EXPRESSION
-        { $$ = '%{JAVACLASS:class}' + $3; }
-    | CONVERSIONPATTERN_START FORMAT_MODIFIERS CLASS EXPRESSION
-        { $$ = '%{JAVACLASS:class}' + $4; }
-    | CONVERSIONPATTERN_START DATE EXPRESSION
+    | CONVERSIONPATTERN_START CONVERSION_CHARACTER EXPRESSION
         { $$ = $2 + $3; }
-    | CONVERSIONPATTERN_START FORMAT_MODIFIERS DATE EXPRESSION
+    | CONVERSIONPATTERN_START FORMAT_MODIFIERS CONVERSION_CHARACTER EXPRESSION
         { $$ = $3 + $4; }
-    | CONVERSIONPATTERN_START FILE EXPRESSION
-        { $$ = '%{JAVAFILE:file}' + $3; }
-    | CONVERSIONPATTERN_START FORMAT_MODIFIERS FILE EXPRESSION
-        { $$ = '%{JAVAFILE:file}' + $4; }
-    | CONVERSIONPATTERN_START LOCATION EXPRESSION
-        { $$ = '%{JAVASTACKTRACEPART:location}' + $3; }
-    | CONVERSIONPATTERN_START FORMAT_MODIFIERS LOCATION EXPRESSION
-        { $$ = '%{JAVASTACKTRACEPART:location}' + $4; }
-    | CONVERSIONPATTERN_START LINE EXPRESSION
-        { $$ = '%{NONNEGINT:line}' + $3; }
-    | CONVERSIONPATTERN_START FORMAT_MODIFIERS LINE EXPRESSION
-        { $$ = '%{NONNEGINT:line}' + $4; }
-    | CONVERSIONPATTERN_START MESSAGE EXPRESSION
-        { $$ = '%{GREEDYDATA:message}' + $3; }
-    | CONVERSIONPATTERN_START FORMAT_MODIFIERS MESSAGE EXPRESSION
-        { $$ = '%{GREEDYDATA:message}' + $4; }
-    | CONVERSIONPATTERN_START METHOD EXPRESSION
-        { $$ = '%{JAVAMETHOD:method}' + $3; }
-    | CONVERSIONPATTERN_START FORMAT_MODIFIERS METHOD EXPRESSION
-        { $$ = '%{JAVAMETHOD:method}' + $4; }
-        
-
     | ANY_CHAR EXPRESSION
         { $$ = $1 + $2; }
     | EOF /* terminating */
+    ;
+
+CONVERSION_CHARACTER
+    : CATEGORY
+        { $$ = '%{JAVACLASS:category}'; }
+    | CLASS
+        { $$ = '%{JAVACLASS:class}'; }
+    | DATE
+        { $$ = $1; }
+    | FILE
+        { $$ = '%{JAVAFILE:file}'; }
+    | LOCATION
+        { $$ = '%{JAVASTACKTRACEPART:location}'; }
+    | LINE
+        { $$ = '%{NONNEGINT:line}'; }
+    | MESSAGE
+        { $$ = '%{GREEDYDATA:message}'; }
+    | METHOD
+        { $$ = '%{JAVAMETHOD:method}'; }
     ;
 
 DATE
