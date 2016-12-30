@@ -7,7 +7,9 @@
         "test": "jasmine-node spec",
         "ncu": "npm-check-updates",
         "ncu-a": "npm-check-updates -a",
-        "jison": "cd lib; jison ../grammar/*.jison"
+        "jison": "cd lib; jison ../grammar/*.jison",
+        "uglifyjs": "del lib/*.min.js; uglifyjs-folder lib -eo lib",
+        "build": "npm run jison && npm run uglifyjs"
     },
     "repository": {
         "type": "git",
@@ -24,8 +26,11 @@
     },
     "homepage": "https://github.com/2grok/2grok#readme",
     "devDependencies": {
+        "del-cli": "0.2.1",
         "jasmine-node": "1.14.5",
         "jison": "0.4.17",
-        "npm-check-updates": "2.8.9"
+        "npm-check-updates": "2.8.9",
+        "uglify-js": "2.7.5",
+        "uglifyjs-folder": "1.0.0"
     }
 }
