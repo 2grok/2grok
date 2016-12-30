@@ -51,7 +51,7 @@
 <dateformat>[z]+                                                                                return 'TIMEZONE_GENERAL';
 <dateformat>[Z]+                                                                                return 'TIMEZONE_RFC822';
 <dateformat>[X]+                                                                                return 'TIMEZONE_ISO_8601';
-<dateformat>(.)                                                                                 return 'DATE_ANY_CHAR';
+<dateformat>[^}]                                                                                return 'DATE_ANY_CHAR';
 '%%'                                                                                            return 'PERCENT';
 '%'                                             %{ this.begin('conversionpattern');		        return 'CONVERSIONPATTERN_START'; %}
 (.)                                                                                             return 'ANY_CHAR';
@@ -111,52 +111,57 @@ DATE
     ;
 
 DATE_EXPLICIT
-    : ERA DATE_EXPLICIT
-        { $$ = '%{[A-Z_]+' + $2; }
-    | YEAR DATE_EXPLICIT
-        { $$ = '%{YEAR}' + $2; }
-    | WEEK_YEAR DATE_EXPLICIT
-        { $$ = '%{NONNEGINT}' + $2; }
-    | MONTH DATE_EXPLICIT
-        { $$ = '%{MONTHNUM2}' + $2; }
-    | WEEK_IN_YEAR DATE_EXPLICIT
-        { $$ = '%{NONNEGINT}' + $2; }
-    | WEEK_IN_MONTH DATE_EXPLICIT
-        { $$ = '%{NONNEGINT}' + $2; }
-    | DAY_IN_YEAR DATE_EXPLICIT
-        { $$ = '%{NONNEGINT}' + $2; }
-    | DAY_IN_MONTH DATE_EXPLICIT
-        { $$ = '%{MONTHDAY}' + $2; }
-    | DAY_OF_WEEK_IN_MONTH DATE_EXPLICIT
-        { $$ = '%{NONNEGINT}' + $2; }
-    | DAY_NAME_IN_WEEK DATE_EXPLICIT
-        { $$ = '%{[a-zA-Z]+}' + $2; }
-    | DAY_NUMBER_IN_WEEK DATE_EXPLICIT
-        { $$ = '%{[1-7]}' + $2; }
-    | AM_PM DATE_EXPLICIT
-        { $$ = '%{[AP][M]}' + $2; }
-    | HOUR_IN_DAY_0_23 DATE_EXPLICIT
-        { $$ = '%{HOUR}' + $2; }
-    | HOUR_IN_DAY_1_24 DATE_EXPLICIT
-        { $$ = '%{HOUR}' + $2; }
-    | HOUR_IN_AM_PM_0_11 DATE_EXPLICIT
-        { $$ = '%{HOUR}' + $2; }
-    | HOUR_IN_AM_PM_1_12 DATE_EXPLICIT
-        { $$ = '%{HOUR}' + $2; }
-    | MINUTE DATE_EXPLICIT
-        { $$ = '%{MINUTE}' + $2; }
-    | SECOND DATE_EXPLICIT
-        { $$ = '%{SECOND}' + $2; }
-    | MILISECOND DATE_EXPLICIT
-        { $$ = '%{NONNEGINT}' + $2; }
-    | TIMEZONE_GENERAL DATE_EXPLICIT
-        { $$ = '%{[a-zA-Z -:0-9]+}' + $2; }
-    | TIMEZONE_RFC822 DATE_EXPLICIT
-        { $$ = '%{[-:0-9]+}' + $2; }
-    | TIMEZONE_ISO_8601 DATE_EXPLICIT
-        { $$ = '%{[-:0-9]+}' + $2; }
-    | DATE_ANY_CHAR DATE_EXPLICIT
+    : DATE_EXPLICIT_PATTERN DATE_EXPLICIT
         { $$ = $1 + $2; }
     | DATE_EXPLICIT_END /* terminating */
         { $$ = ')'; }
+    ;
+
+DATE_EXPLICIT_PATTERN
+    : ERA
+        { $$ = '%{[A-Z_]+'; }
+    | YEAR
+        { $$ = '%{YEAR}'; }
+    | WEEK_YEAR
+        { $$ = '%{NONNEGINT}'; }
+    | MONTH
+        { $$ = '%{MONTHNUM2}'; }
+    | WEEK_IN_YEAR
+        { $$ = '%{NONNEGINT}'; }
+    | WEEK_IN_MONTH
+        { $$ = '%{NONNEGINT}'; }
+    | DAY_IN_YEAR
+        { $$ = '%{NONNEGINT}'; }
+    | DAY_IN_MONTH
+        { $$ = '%{MONTHDAY}'; }
+    | DAY_OF_WEEK_IN_MONTH
+        { $$ = '%{NONNEGINT}'; }
+    | DAY_NAME_IN_WEEK
+        { $$ = '%{[a-zA-Z]+}'; }
+    | DAY_NUMBER_IN_WEEK
+        { $$ = '%{[1-7]}'; }
+    | AM_PM
+        { $$ = '%{[AP][M]}'; }
+    | HOUR_IN_DAY_0_23
+        { $$ = '%{HOUR}'; }
+    | HOUR_IN_DAY_1_24
+        { $$ = '%{HOUR}'; }
+    | HOUR_IN_AM_PM_0_11
+        { $$ = '%{HOUR}'; }
+    | HOUR_IN_AM_PM_1_12
+        { $$ = '%{HOUR}'; }
+    | MINUTE
+        { $$ = '%{MINUTE}'; }
+    | SECOND
+        { $$ = '%{SECOND}'; }
+    | MILISECOND
+        { $$ = '%{NONNEGINT}'; }
+    | TIMEZONE_GENERAL
+        { $$ = '%{[a-zA-Z -:0-9]+}'; }
+    | TIMEZONE_RFC822
+        { $$ = '%{[-:0-9]+}'; }
+    | TIMEZONE_ISO_8601
+        { $$ = '%{[-:0-9]+}'; }
+    | DATE_ANY_CHAR
+        { $$ = $1; }
     ;
