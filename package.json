@@ -11,7 +11,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/typekpb/2grok.git"
+        "url": "git+https://github.com/2grok/2grok.git"
     },
     "keywords": [
         "grok",
@@ -20,9 +20,9 @@
     "author": "Peter Butkovic",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/typekpb/2grok/issues"
+        "url": "https://github.com/2grok/2grok/issues"
     },
-    "homepage": "https://github.com/typekpb/2grok#readme",
+    "homepage": "https://github.com/2grok/2grok#readme",
     "devDependencies": {
         "jasmine-node": "1.14.5",
         "jison": "0.4.17",
