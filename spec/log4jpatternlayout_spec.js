@@ -204,6 +204,19 @@ describe("with %t", function() {
     });
 });
 
+describe("with %x", function() {
+    describe("implicit", function() {
+        it("returns '%{NOTSPACE:ndc}'", function() {
+            expect(exec('%x')).toBe('%{NOTSPACE:ndc}');
+        });
+    });
+    describe("having format modifiers", function() {
+        it("returns '%{NOTSPACE:ndc}'", function() {
+            expect(exec('%-20.30x')).toBe('%{NOTSPACE:ndc}');
+        });
+    });
+});
+
 describe("with percent char", function() {
     describe("only", function() {
         it("returns '%'", function() {

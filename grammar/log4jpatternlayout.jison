@@ -103,6 +103,8 @@ CONVERSION_CHARACTER
         { $$ = '%{NONNEGINT:relativetime}'; }
     | THREAD
         { $$ = '%{NOTSPACE:thread}'; }
+    | NDC
+        { $$ = '%{NOTSPACE:ndc}'; }
     ;
 
 DATE
