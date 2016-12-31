@@ -178,6 +178,19 @@ describe("with %p", function() {
     });
 });
 
+describe("with %r", function() {
+    describe("implicit", function() {
+        it("returns '%{NONNEGINT:relativetime}'", function() {
+            expect(exec('%r')).toBe('%{NONNEGINT:relativetime}');
+        });
+    });
+    describe("having format modifiers", function() {
+        it("returns '%{NONNEGINT:relativetime}'", function() {
+            expect(exec('%-20.30r')).toBe('%{NONNEGINT:relativetime}');
+        });
+    });
+});
+
 describe("with percent char", function() {
     describe("only", function() {
         it("returns '%'", function() {

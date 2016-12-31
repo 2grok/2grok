@@ -23,7 +23,7 @@
 <conversionpattern>[M]                          %{ this.popState();                             return 'METHOD'; %}
 <conversionpattern>[n]                          %{ this.popState();                             return 'NEWLINE'; %}
 <conversionpattern>[p]                          %{ this.popState();                             return 'PRIORITY'; %}
-<conversionpattern>[r]                          %{ this.popState();                             return 'RELATIVE'; %}
+<conversionpattern>[r]                          %{ this.popState();                             return 'RELATIVE_TIME'; %}
 <conversionpattern>[t]                          %{ this.popState();                             return 'THREAD'; %}
 <conversionpattern>[x]                          %{ this.popState();                             return 'NDC'; %}
 <conversionpattern>[X]                          %{ this.popState();                             return 'MDC'; %}
@@ -99,6 +99,8 @@ CONVERSION_CHARACTER
         { $$ = '(?<newline>(\r|\n)+)'}
     | PRIORITY
         { $$ = '%{LOGLEVEL:loglevel}'; }
+    | RELATIVE_TIME
+        { $$ = '%{NONNEGINT:relativetime}'; }
     ;
 
 DATE
