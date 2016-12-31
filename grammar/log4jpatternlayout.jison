@@ -101,6 +101,8 @@ CONVERSION_CHARACTER
         { $$ = '%{LOGLEVEL:loglevel}'; }
     | RELATIVE_TIME
         { $$ = '%{NONNEGINT:relativetime}'; }
+    | THREAD
+        { $$ = '%{NOTSPACE:thread}'; }
     ;
 
 DATE

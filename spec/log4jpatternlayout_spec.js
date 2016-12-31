@@ -191,6 +191,19 @@ describe("with %r", function() {
     });
 });
 
+describe("with %t", function() {
+    describe("implicit", function() {
+        it("returns '%{NOTSPACE:thread}'", function() {
+            expect(exec('%t')).toBe('%{NOTSPACE:thread}');
+        });
+    });
+    describe("having format modifiers", function() {
+        it("returns '%{NOTSPACE:thread}'", function() {
+            expect(exec('%-20.30t')).toBe('%{NOTSPACE:thread}');
+        });
+    });
+});
+
 describe("with percent char", function() {
     describe("only", function() {
         it("returns '%'", function() {
