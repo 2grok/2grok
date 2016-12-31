@@ -97,6 +97,8 @@ CONVERSION_CHARACTER
         { $$ = '%{JAVAMETHOD:method}'; }
     | NEWLINE
         { $$ = '(?<newline>(\r|\n)+)'}
+    | PRIORITY
+        { $$ = '%{LOGLEVEL:loglevel}'; }
     ;
 
 DATE

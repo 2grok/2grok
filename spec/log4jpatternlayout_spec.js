@@ -165,6 +165,19 @@ describe("with %n", function() {
     });
 });
 
+describe("with %p", function() {
+    describe("implicit", function() {
+        it("returns '%{LOGLEVEL:loglevel}'", function() {
+            expect(exec('%p')).toBe('%{LOGLEVEL:loglevel}');
+        });
+    });
+    describe("having format modifiers", function() {
+        it("returns '%{LOGLEVEL:loglevel}'", function() {
+            expect(exec('%-20.30p')).toBe('%{LOGLEVEL:loglevel}');
+        });
+    });
+});
+
 describe("with percent char", function() {
     describe("only", function() {
         it("returns '%'", function() {
