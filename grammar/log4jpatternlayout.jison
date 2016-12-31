@@ -26,7 +26,7 @@
 <conversionpattern>[r]                          %{ this.popState();                             return 'RELATIVE_TIME'; %}
 <conversionpattern>[t]                          %{ this.popState();                             return 'THREAD'; %}
 <conversionpattern>[x]                          %{ this.popState();                             return 'NDC'; %}
-<conversionpattern>[X]                          %{ this.popState();                             return 'MDC'; %}
+<conversionpattern>[X][{]\S+[}]                 %{ this.popState();                             return 'MDC'; %}
 <conversionpattern>[-]?[0-9]*([.][0-9]+)?                                                       return 'FORMAT_MODIFIERS';
 <dateformat>[}]                                 %{ this.popState();                             return 'DATE_EXPLICIT_END'; %}
 <dateformat>[G]+                                                                                return 'ERA';
@@ -105,6 +105,8 @@ CONVERSION_CHARACTER
         { $$ = '%{NOTSPACE:thread}'; }
     | NDC
         { $$ = '%{NOTSPACE:ndc}'; }
+    | MDC
+        { $$ = '%{NOTSPACE:mdc}'; }
     ;
 
 DATE

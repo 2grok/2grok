@@ -217,6 +217,20 @@ describe("with %x", function() {
     });
 });
 
+describe("with %X", function() {
+    describe("implicit", function() {
+        it("returns '%{NOTSPACE:mdc}'", function() {
+            expect(exec('%X{foo}')).toBe('%{NOTSPACE:mdc}');
+        });
+    });
+    describe("having format modifiers", function() {
+        it("returns '%{NOTSPACE:mdc}'", function() {
+            expect(exec('%-20.30X{foo}')).toBe('%{NOTSPACE:mdc}');
+        });
+    });
+});
+
+
 describe("with percent char", function() {
     describe("only", function() {
         it("returns '%'", function() {
