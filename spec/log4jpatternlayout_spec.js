@@ -105,6 +105,19 @@ describe("with %F", function() {
     });
 });
 
+describe("with %l", function() {
+    describe("implicit", function() {
+        it("returns '%{JAVASTACKTRACEPART:location}'", function() {
+            expect(exec('%l')).toBe('%{JAVASTACKTRACEPART:location}');
+        });
+    });
+    describe("having format modifiers", function() {
+        it("returns '%{JAVAFILE:file}'", function() {
+            expect(exec('%-20.30l')).toBe('%{JAVASTACKTRACEPART:location}');
+        });
+    });
+});
+
 describe("with %L", function() {
     describe("implicit", function() {
         it("returns '%{NONNEGINT:line}'", function() {
@@ -144,15 +157,10 @@ describe("with %M", function() {
     });
 });
 
-describe("with %l", function() {
+describe("with %n", function() {
     describe("implicit", function() {
-        it("returns '%{JAVASTACKTRACEPART:location}'", function() {
-            expect(exec('%l')).toBe('%{JAVASTACKTRACEPART:location}');
-        });
-    });
-    describe("having format modifiers", function() {
-        it("returns '%{JAVAFILE:file}'", function() {
-            expect(exec('%-20.30l')).toBe('%{JAVASTACKTRACEPART:location}');
+        it("returns '(?<newline>(\r|\n)+)'", function() {
+            expect(exec('%n')).toBe('(?<newline>(\r|\n)+)');
         });
     });
 });

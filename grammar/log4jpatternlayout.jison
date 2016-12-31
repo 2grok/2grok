@@ -23,7 +23,7 @@
 <conversionpattern>[M]                          %{ this.popState();                             return 'METHOD'; %}
 <conversionpattern>[n]                          %{ this.popState();                             return 'NEWLINE'; %}
 <conversionpattern>[p]                          %{ this.popState();                             return 'PRIORITY'; %}
-<conversionpattern>[r]                          %{ this.popState();                             return 'PERFORMANCE'; %}
+<conversionpattern>[r]                          %{ this.popState();                             return 'RELATIVE'; %}
 <conversionpattern>[t]                          %{ this.popState();                             return 'THREAD'; %}
 <conversionpattern>[x]                          %{ this.popState();                             return 'NDC'; %}
 <conversionpattern>[X]                          %{ this.popState();                             return 'MDC'; %}
@@ -95,6 +95,8 @@ CONVERSION_CHARACTER
         { $$ = '%{GREEDYDATA:message}'; }
     | METHOD
         { $$ = '%{JAVAMETHOD:method}'; }
+    | NEWLINE
+        { $$ = '(?<newline>(\r|\n)+)'}
     ;
 
 DATE
