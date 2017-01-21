@@ -7,8 +7,8 @@
         "test": "jasmine-node spec",
         "ncu": "npm-check-updates",
         "ncu-a": "npm-check-updates -a",
-        "jison": "cd lib; jison ../grammar/*.jison",
-        "uglifyjs": "del lib/*.min.js; uglifyjs-folder lib -eo lib",
+        "jison": "cd dist; jison ../lib/*.jison",
+        "uglifyjs": "del dist/*.min.js; uglifyjs-folder dist -eo dist",
         "build": "npm run jison && npm run uglifyjs"
     },
     "repository": {

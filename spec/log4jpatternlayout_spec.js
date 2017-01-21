@@ -281,5 +281,5 @@ describe("without patterns", function() {
 });
 
 function exec(input) {
-    return require("../lib/log4jpatternlayout").parse(input);
+    return require("../dist/log4jpatternlayout").parse(input);
 }
