@@ -1,6 +1,6 @@
 {
     "name": "2grok",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Logging pattern to grok filter converter",
     "main": "index.js",
     "scripts": {
