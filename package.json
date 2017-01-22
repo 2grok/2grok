@@ -32,5 +32,9 @@
         "npm-check-updates": "2.8.9",
         "uglify-js": "2.7.5",
         "uglifyjs-folder": "1.0.0"
+    },
+    "dependencies": {
+        "fs": "0.0.1-security",
+        "path": "0.12.7"
     }
 }
